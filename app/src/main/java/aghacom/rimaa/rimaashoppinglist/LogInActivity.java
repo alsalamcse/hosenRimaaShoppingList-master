@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class LogInActivity extends AppCompatActivity
 {
     private EditText etEmail;
@@ -15,6 +18,10 @@ public class LogInActivity extends AppCompatActivity
     private Button btnIn;
     private Button btnUp;
     private Button btnForget;
+    private FirebaseAuth auth;
+    private FirebaseUser firebaseUser;
+
+
 
 
     @Override
@@ -37,6 +44,9 @@ public class LogInActivity extends AppCompatActivity
         });
                 btnUp= (Button) findViewById(R.id.btnUp);
         btnForget= (Button) findViewById(R.id.btnForget);
+
+
+
 
 
 
