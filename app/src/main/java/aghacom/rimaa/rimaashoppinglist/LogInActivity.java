@@ -39,6 +39,7 @@ public class LogInActivity extends AppCompatActivity
         btnForget= (Button) findViewById(R.id.btnForget);
 
 
+
     }
 
 
