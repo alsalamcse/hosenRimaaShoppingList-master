@@ -15,8 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
@@ -27,69 +26,48 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseUser firebaseUser;
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        etName= (EditText) findViewById(R.id.etName);
-        etEmail= (EditText) findViewById(R.id.etEmail);
-        etPassword= (EditText) findViewById(R.id.etPassword);
-        etRePassword= (EditText) findViewById(R.id.etRePassword);
-        etPhone= (EditText) findViewById(R.id.etPhone);
-        btnSave= (Button) findViewById(R.id.btnSave);
-
+        etName = (EditText) findViewById(R.id.etName);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        etRePassword = (EditText) findViewById(R.id.etRePassword);
+        etPhone = (EditText) findViewById(R.id.etPhone);
+        btnSave = (Button) findViewById(R.id.btnSave);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
-
-        auth = FirebaseAuth.getInstance();
-        firebaseUser =auth.getCurrentUser();
-        if (firebaseUser == null) {
-            //not signed in, launch the sign in activity
-            startActivity(new Intent(this, LogInActivity.class));
-            finish();
-            return;
-        }else {
-            String userName = firebaseUser.getDisplayName();
-            if (firebaseUser.getPhotoUrl()!= null){
-                String photoUrl = firebaseUser.getPhotoUrl().toString();
-            }
-        }
-
+        btnSave.setOnClickListener(this);
     }
 
-private void createAccount(String email , String passw)
-{
-    auth.createUserWithEmailAndPassword(email,passw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful())
-            {
-                Toast.makeText(SignUpActivity.this,"Authentication Successful",Toast.LENGTH_SHORT.());
-                finish();
-            }
-            else
-​{
-                Toast.makeText(SignUpActivity.this, "Authentication failed."​+task.getException().getMessage(),
-                        LENGTH_SHORT​).show();
-                task.getException().printStackTrace();
-            }
-        }
-    });
-}
+        public void dataHandler() {
 
-    private void show() {
+        String name=etEmail.getText().toString();
+        String passw=etPassword.getText().toString();
+        creatAcount(name,passw);
     }
 
-    private class LENGTH_SHORT​ {
+
+
+    private void creatAcount(String email, String passw) {
+        auth.createUserWithEmailAndPassword(email, passw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(SignUpActivity.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
+                    //updateUserProfile(task.getResult().getUser());
+                    finish();
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    task.getException().printStackTrace();
+                }
+            }
+        });
     }
-}
-    })
-}
 
     @Override
     public void onClick(View view) {
-
+        dataHandler();
     }
 }
